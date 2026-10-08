@@ -87,13 +87,32 @@ function changeQuantity(id, delta) {
   renderCart();
 }
 
+function showAlert(msg) {
+  let note = $("orderNotice");
+  if (!note) {
+    note = document.createElement("div");
+    note.id = "orderNotice";
+    note.style.cssText = "margin-top: 12px; padding: 10px 14px; border-radius: 6px; background: var(--sambal); color: #fff; font-size: 15px; font-weight: 600;";
+    const cartEl = $("cartList") ? $("cartList").parentElement : null;
+    if (cartEl) cartEl.appendChild(note);
+  }
+  note.textContent = msg;
+  note.style.display = "block";
+  setTimeout(() => {
+    if (note) note.style.display = "none";
+  }, 4000);
+  try {
+    alert(msg);
+  } catch (_) {}
+}
+
 function sendOrder() {
   const items = getCartItems();
   const nama = $("nama").value.trim();
   const alamat = $("alamat").value.trim();
 
-  if (!items.length) return alert("Pilih minimal satu menu dulu.");
-  if (!nama || !alamat) return alert("Isi nama dan alamat pengantaran dulu.");
+  if (!items.length) return showAlert("Pilih minimal satu menu dulu.");
+  if (!nama || !alamat) return showAlert("Isi nama dan alamat pengantaran dulu.");
 
   const lines = items.map((m) => `- ${cart[m.id]}× ${m.name}`).join("\n");
   const message =
@@ -102,7 +121,15 @@ function sendOrder() {
     `Total: ${formatRupiah(getTotal())}\n` +
     `Alamat: ${alamat}`;
 
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+  const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  try {
+    const win = window.open(waUrl, "_blank", "noopener,noreferrer");
+    if (!win) {
+      window.location.href = waUrl;
+    }
+  } catch (_) {
+    window.location.href = waUrl;
+  }
 }
 
 tabsEl.addEventListener("click", (e) => {

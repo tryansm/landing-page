@@ -1,0 +1,8 @@
+{
+  "name": "Masakan Sunda Rumahan",
+  "description": "Website landing page rumah makan masakan Sunda rumahan dengan daftar menu, jam operasional, dan pemesanan via WhatsApp.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
