@@ -1,0 +1,2 @@
+# Ignore server.js on Vercel so it deploys cleanly as a high-speed static CDN site
+server.js

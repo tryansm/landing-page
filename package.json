@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node server.js",
-    "build": "echo 'Build successful'",
+    "build": "mkdir -p public && cp -f index.html LP.css LP.js lp.css lp.js LP.html public/ 2>/dev/null || true",
     "start": "node server.js"
   },
   "dependencies": {
