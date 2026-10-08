@@ -101,9 +101,6 @@ function showAlert(msg) {
   setTimeout(() => {
     if (note) note.style.display = "none";
   }, 4000);
-  try {
-    alert(msg);
-  } catch (_) {}
 }
 
 function sendOrder() {
@@ -123,10 +120,13 @@ function sendOrder() {
 
   const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   try {
-    const win = window.open(waUrl, "_blank", "noopener,noreferrer");
-    if (!win) {
-      window.location.href = waUrl;
-    }
+    const link = document.createElement("a");
+    link.href = waUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   } catch (_) {
     window.location.href = waUrl;
   }
